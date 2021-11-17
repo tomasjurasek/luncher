@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Luncher.Adapters.Restaurant/bin/Debug/net6.0
+/Luncher.Adapters.Restaurant/obj
+/Luncher.Core/bin/Debug/net6.0
+/Luncher.Core/obj
+/Luncher.Web/bin/Debug/net6.0
+/Luncher.Web/obj
