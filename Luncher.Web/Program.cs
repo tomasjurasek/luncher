@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient<IRestaurant, PadowetzRestaurant>();
+builder.Services.AddSingleton<IRestaurant, PadowetzRestaurant>();
 
 var app = builder.Build();
 

@@ -2,6 +2,8 @@
 {
     public class Menu
     {
+        public static Menu Create(ICollection<Food> foods) => new(foods);
+
         public Menu(ICollection<Food> foods)
         {
             Foods = foods;

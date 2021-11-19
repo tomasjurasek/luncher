@@ -2,6 +2,8 @@
 {
     public class Food
     {
+        public static Food Create(string name) => new(name);
+
         public Food(string name)
         {
             Name = name;
