@@ -9,3 +9,9 @@
 /Luncher.Core/obj
 /Luncher.Web/bin/Debug/net6.0
 /Luncher.Web/obj
+/Luncher.Adapters.Restaurant/bin/Release/net6.0
+/Luncher.Core/bin/Release/net6.0
+/Luncher.Web/bin/Release/net6.0
+/Luncher.Web/Properties/PublishProfiles
+/Luncher.Web/Properties/ServiceDependencies/luncher-app - Zip Deploy
+/Luncher.Web/Luncher.Web.csproj.user
