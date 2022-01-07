@@ -3,7 +3,7 @@
     internal abstract class RestaurantBase
     {
         protected string Name { get; }
-        protected string Url { get; private set; }
+        protected string Url { get; }
 
         public RestaurantBase(string name, string url)
         {
