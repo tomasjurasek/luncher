@@ -1,8 +1,8 @@
 ﻿namespace Luncher.Core.Entities
 {
-    public class Food
+    public class Soap
     {
-        public Food(string name)
+        public Soap(string name)
         {
             Name = name;
         }

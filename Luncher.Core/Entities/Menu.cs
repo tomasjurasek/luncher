@@ -2,11 +2,13 @@
 {
     public class Menu
     {
-        public Menu(ICollection<Food> foods)
+        public Menu(ICollection<Meal> meals, ICollection<Soap> soaps)
         {
-            Foods = foods;
+            Meals = meals;
+            Soaps = soaps;
         }
 
-        public ICollection<Food> Foods { get; }
+        public ICollection<Meal> Meals { get; }
+        public ICollection<Soap> Soaps { get; }
     }
 }

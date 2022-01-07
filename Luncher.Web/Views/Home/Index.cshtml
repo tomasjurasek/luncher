@@ -1,8 +1,26 @@
-﻿@{
+﻿@model IEnumerable<Luncher.Core.Entities.Restaurant>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    @foreach(var restaurant in Model)
+    {
+        <h2>@restaurant.Name</h2>
+        <br />
+        <h5>Polévky</h5>
+        @foreach(var soap in restaurant.Menu.Soaps)
+        {
+           <div>@soap.Name</div> 
+        }
+        <br />
+
+         <h5>Hlavní</h5>
+        @foreach(var meal in restaurant.Menu.Meals)
+        {
+           <div>@meal.Name</div> 
+        }
+
+        <hr />
+    }
 </div>

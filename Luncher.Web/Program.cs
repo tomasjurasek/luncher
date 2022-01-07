@@ -1,11 +1,10 @@
-using Luncher.Adapters.Restaurant;
-using Luncher.Core.Contracts;
+using Luncher.Adapters.Restaurant.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient<IRestaurant, PadowetzRestaurant>();
+builder.Services.AddRestaurants();
 
 var app = builder.Build();
 

@@ -1,27 +1,22 @@
 ﻿using Luncher.Core.Contracts;
+using Luncher.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Luncher.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IRestaurant _restaurant;
+        private readonly IEnumerable<IRestaurant> _restaurants;
 
-        public HomeController(IRestaurant restaurant)
+        public HomeController(IEnumerable<IRestaurant> restaurants)
         {
-            _restaurant = restaurant;
+            _restaurants = restaurants;
         }
 
         public async Task<IActionResult> Index()
         {
-            await _restaurant.GetAsync();
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View();
+            var restaurants = await Task.WhenAll(_restaurants.Select(s => s.GetInfoAsync()));
+            return View(restaurants);
         }
     }
 }

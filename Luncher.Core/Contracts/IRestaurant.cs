@@ -4,6 +4,6 @@ namespace Luncher.Core.Contracts
 {
     public interface IRestaurant
     {
-        Task<Restaurant> GetAsync();
+        Task<Restaurant> GetInfoAsync();
     }
 }
