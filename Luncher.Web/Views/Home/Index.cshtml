@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Luncher.Core.Entities.Restaurant>
+﻿@model IEnumerable<Luncher.Web.Models.RestaurantResponse>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -16,14 +16,14 @@
         <h2>@restaurant.Name</h2>
         <br />
         <h5>Polévky</h5>
-        @foreach(var soap in restaurant.Menu.Soaps)
+        @foreach(var soap in restaurant.Soaps)
         {
            <div>@soap.Name</div> 
         }
         <br />
 
          <h5>Hlavní</h5>
-        @foreach(var meal in restaurant.Menu.Meals)
+        @foreach(var meal in restaurant.Meals)
         {
            <div>@meal.Name</div> 
         }

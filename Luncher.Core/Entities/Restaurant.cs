@@ -2,15 +2,15 @@
 {
     public class Restaurant
     {
-        public static Restaurant Create(string name, Menu menu) => new(name, menu);
+        public static Restaurant Create(Type type, Menu menu) => new(type, menu);
 
-        public Restaurant(string name, Menu menu)
+        public Restaurant(Type type, Menu menu)
         {
-            Name = name;
+            Type = type;
             Menu = menu;
         }
 
-        public string Name { get; }
+        public Type Type { get; }
         public Menu Menu { get; }
     }
 }

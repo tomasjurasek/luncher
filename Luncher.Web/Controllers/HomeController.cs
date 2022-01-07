@@ -1,21 +1,25 @@
-﻿using Luncher.Core.Contracts;
-using Luncher.Core.Entities;
+﻿using Luncher.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Luncher.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IEnumerable<IRestaurant> _restaurants;
+        private readonly IDistributedCache _cache;
 
-        public HomeController(IEnumerable<IRestaurant> restaurants)
-        {
-            _restaurants = restaurants;
+        public HomeController(IDistributedCache cache)
+        { 
+            _cache = cache;
         }
 
         public async Task<IActionResult> Index()
         {
-            var restaurants = await Task.WhenAll(_restaurants.Select(s => s.GetInfoAsync()));
+            var restaurants = Enum.GetValues(typeof(Core.Entities.Type)).Cast<Core.Entities.Type>()
+                .Select(s => _cache.GetString(s.ToString()))
+                .Select(s => JsonSerializer.Deserialize<RestaurantResponse>(s));
+
             return View(restaurants);
         }
     }

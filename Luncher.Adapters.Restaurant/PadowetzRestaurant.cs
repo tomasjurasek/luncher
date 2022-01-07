@@ -9,7 +9,7 @@ namespace Luncher.Adapters.Restaurant
     {
         private readonly HtmlWeb _htmlWeb;
 
-        public PadowetzRestaurant() : base("Padowetz", "https://www.menicka.cz/2743-restaurant-padowetz.html")
+        public PadowetzRestaurant() : base(Core.Entities.Type.Padowetz, "https://www.menicka.cz/2743-restaurant-padowetz.html")
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             _htmlWeb = new HtmlWeb();
@@ -34,7 +34,7 @@ namespace Luncher.Adapters.Restaurant
                 .Select(s => new Meal(s))
                 .ToList();
 
-            return new Core.Entities.Restaurant(Name, new Menu(meals, soaps));
+            return new Core.Entities.Restaurant(Type, new Menu(meals, soaps));
         }
     }
 }

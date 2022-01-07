@@ -2,12 +2,12 @@
 {
     internal abstract class RestaurantBase
     {
-        protected string Name { get; }
+        protected Core.Entities.Type Type { get; }
         protected string Url { get; }
 
-        public RestaurantBase(string name, string url)
+        public RestaurantBase(Core.Entities.Type type, string url)
         {
-            Name = name;
+            Type = type;
             Url = url;
         }
     }

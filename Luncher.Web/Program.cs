@@ -1,10 +1,14 @@
 using Luncher.Adapters.Restaurant.Extensions;
+using Luncher.Web.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRestaurants();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddHostedService<LoadRestaurantsBackgroundService>();
 
 var app = builder.Build();
 
