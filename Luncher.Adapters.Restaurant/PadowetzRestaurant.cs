@@ -15,9 +15,10 @@ namespace Luncher.Adapters.Restaurant
             _htmlWeb = new HtmlWeb();
         }
 
-        public  async Task<Core.Entities.Restaurant> GetInfoAsync()
+        public async Task<Core.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)
         {
-            var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url);
+            var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url, cancellationToken);
+
             var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "menicka")
                 .First();

@@ -20,19 +20,27 @@ namespace Luncher.Web.BackgroundServices
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                foreach (var restaurant in _restaurants)
+                try
                 {
-                    var info = await restaurant.GetInfoAsync();
+                    foreach (var restaurant in _restaurants)
+                    {
+                        var info = await restaurant.GetInfoAsync(stoppingToken);
 
-                    await _cache.SetStringAsync(info.Type.ToString(),
-                      JsonSerializer.Serialize(info.MapToResponse()),
-                      new DistributedCacheEntryOptions
-                      {
-                          AbsoluteExpiration = DateTime.UtcNow.AddHours(4)
-                      });
+                        await _cache.SetStringAsync(info.Type.ToString(),
+                          JsonSerializer.Serialize(info.MapToResponse()),
+                          new DistributedCacheEntryOptions
+                          {
+                              AbsoluteExpiration = DateTime.UtcNow.AddHours(4)
+                          }, stoppingToken);
+                    }
+
+                    await Task.Delay(TimeSpan.FromHours(4), stoppingToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    // Do nothing. Shutting down.
                 }
 
-                await Task.Delay(TimeSpan.FromHours(4));
             }
         }
     }
