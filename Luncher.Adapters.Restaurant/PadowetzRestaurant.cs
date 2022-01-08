@@ -1,11 +1,10 @@
 ﻿using HtmlAgilityPack;
-using Luncher.Core.Contracts;
 using Luncher.Core.Entities;
 using System.Text;
 
 namespace Luncher.Adapters.Restaurant
 {
-    internal class PadowetzRestaurant : RestaurantBase, IRestaurant
+    internal class PadowetzRestaurant : RestaurantBase
     {
         private readonly HtmlWeb _htmlWeb;
 
@@ -15,7 +14,7 @@ namespace Luncher.Adapters.Restaurant
             _htmlWeb = new HtmlWeb();
         }
 
-        public async Task<Core.Entities.Restaurant> GetInfoAsync()
+        protected override async Task<Core.Entities.Restaurant> GetInfoCoreAsync()
         {
             var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url);
             var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")

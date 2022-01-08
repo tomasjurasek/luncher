@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Luncher.Adapters.Restaurant
 {
-    internal class TustoRestaurant : RestaurantBase, IRestaurant
+    internal class TustoRestaurant : RestaurantBase
     {
         private readonly HtmlWeb _htmlWeb;
 
@@ -15,7 +15,7 @@ namespace Luncher.Adapters.Restaurant
             _htmlWeb = new HtmlWeb();
         }
 
-        public async Task<Core.Entities.Restaurant> GetInfoAsync()
+        protected override async Task<Core.Entities.Restaurant> GetInfoCoreAsync()
         {
             var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url);
 

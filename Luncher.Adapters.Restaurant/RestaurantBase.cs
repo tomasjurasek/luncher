@@ -1,6 +1,8 @@
-﻿namespace Luncher.Adapters.Restaurant
+﻿using Luncher.Core.Contracts;
+
+namespace Luncher.Adapters.Restaurant
 {
-    internal abstract class RestaurantBase
+    internal abstract class RestaurantBase : IRestaurant
     {
         protected Core.Entities.Type Type { get; }
         protected string Url { get; }
@@ -10,5 +12,20 @@
             Type = type;
             Url = url;
         }
+
+        public async Task<Core.Entities.Restaurant?> GetInfoAsync()
+        {
+            try
+            {
+                return await GetInfoCoreAsync();
+            }
+            catch (Exception ex)
+            {
+                //Log
+                return null;
+            }
+        }
+
+        protected abstract Task<Core.Entities.Restaurant>  GetInfoCoreAsync();
     }
 }

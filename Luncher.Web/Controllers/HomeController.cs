@@ -18,6 +18,7 @@ namespace Luncher.Web.Controllers
         {
             var restaurants = Enum.GetValues(typeof(Core.Entities.Type)).Cast<Core.Entities.Type>()
                 .Select(s => _cache.GetString(s.ToString()))
+                .Where(s => s != null)
                 .Select(s => JsonSerializer.Deserialize<RestaurantResponse>(s));
 
             return View(restaurants);
