@@ -7,7 +7,7 @@ namespace Luncher.Adapters.Restaurant
         protected Core.Entities.Type Type { get; }
         protected string Url { get; }
 
-        public RestaurantBase(Core.Entities.Type type, string url) // TODO Adress
+        public RestaurantBase(Core.Entities.Type type, string url) // TODO Address
         {
             Type = type;
             Url = url;
