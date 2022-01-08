@@ -7,12 +7,11 @@ namespace Luncher.Web.Mappers
     {
         public static RestaurantResponse MapToResponse(this Restaurant restaurant)
         {
-            return new RestaurantResponse
-            {
-                Name = restaurant.Type.ToString(),
-                Soaps = restaurant.Menu.Soaps.Select(s => new Food { Name = s.Name }).ToArray(),
-                Meals = restaurant.Menu.Meals.Select(s => new Food { Name = s.Name }).ToArray(),
-            };
+            return new RestaurantResponse(
+                restaurant.Type.ToString(), 
+                restaurant.Menu.Soaps.Select(s => new Food(s.Name)).ToArray(), 
+                restaurant.Menu.Meals.Select(s => new Food(s.Name)).ToArray());
+
         }
     }
 }
