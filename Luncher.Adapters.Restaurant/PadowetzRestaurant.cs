@@ -27,17 +27,17 @@ namespace Luncher.Adapters.Restaurant
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "polevka")
                 .Select(s => s.Element("div")?.InnerText)
                 .Where(s => s != null)
-                .Select(s => new Soap(s))
+                .Select(s => Soap.Create(s))
                 .ToList();
 
             var meals = todayMenuNode.Descendants("li")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "jidlo")
                 .Select(s => s.Element("div")?.InnerText)
                 .Where(s => s != null)
-                .Select(s => new Meal(s))
+                .Select(s => Meal.Create(s))
                 .ToList();
 
-            return new Core.Entities.Restaurant(Type, new Menu(meals, soaps));
+            return Core.Entities.Restaurant.Create(Type, Menu.Create(meals, soaps));
         }
     }
 }
