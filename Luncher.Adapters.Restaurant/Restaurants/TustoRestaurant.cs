@@ -5,17 +5,17 @@ using System.Text;
 
 namespace Luncher.Adapters.Restaurant
 {
-    internal class PadowetzRestaurant : RestaurantBase, IRestaurant
+    internal class TustoRestaurant : RestaurantBase
     {
         private readonly HtmlWeb _htmlWeb;
 
-        public PadowetzRestaurant() : base(Core.Entities.Type.Padowetz, "https://www.menicka.cz/2743-restaurant-padowetz.html")
+        public TustoRestaurant() : base(Core.Entities.Type.Tusto, "https://www.menicka.cz/2787-tusto-titanium.html")
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             _htmlWeb = new HtmlWeb();
         }
 
-        public async Task<Core.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)
+        protected override async Task<Core.Entities.Restaurant> GetInfoCoreAsync(CancellationToken cancellationToken)
         {
             var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url, cancellationToken);
 
