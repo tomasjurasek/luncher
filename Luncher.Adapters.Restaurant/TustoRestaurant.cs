@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Luncher.Adapters.Restaurant
 {
-    internal class TustoRestaurant : RestaurantBase
+    internal class TustoRestaurant : RestaurantBase, IRestaurant
     {
         private readonly HtmlWeb _htmlWeb;
 
@@ -15,7 +15,7 @@ namespace Luncher.Adapters.Restaurant
             _htmlWeb = new HtmlWeb();
         }
 
-        protected override async Task<Core.Entities.Restaurant> GetInfoCoreAsync()
+        public async Task<Core.Entities.Restaurant> GetInfoAsync()
         {
             var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url);
 
@@ -25,13 +25,15 @@ namespace Luncher.Adapters.Restaurant
 
             var soaps = todayMenuNode.Descendants("li")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "polevka")
-                .Select(s => s.Element("div").InnerText)
+                .Select(s => s.Element("div")?.InnerText)
+                .Where(s => s != null)
                 .Select(s => new Soap(s))
                 .ToList();
 
             var meals = todayMenuNode.Descendants("li")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "jidlo")
-                .Select(s => s.Element("div").InnerText)
+                .Select(s => s.Element("div")?.InnerText)
+                .Where(s => s != null)
                 .Select(s => new Meal(s))
                 .ToList();
 

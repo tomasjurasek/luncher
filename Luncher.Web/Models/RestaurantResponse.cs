@@ -9,7 +9,7 @@
 
     public class Food
     {
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; } = string.Empty;
     }
 
 }

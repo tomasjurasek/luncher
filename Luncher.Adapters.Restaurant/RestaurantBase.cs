@@ -2,7 +2,7 @@
 
 namespace Luncher.Adapters.Restaurant
 {
-    internal abstract class RestaurantBase : IRestaurant
+    internal abstract class RestaurantBase
     {
         protected Core.Entities.Type Type { get; }
         protected string Url { get; }
@@ -12,20 +12,5 @@ namespace Luncher.Adapters.Restaurant
             Type = type;
             Url = url;
         }
-
-        public async Task<Core.Entities.Restaurant?> GetInfoAsync()
-        {
-            try
-            {
-                return await GetInfoCoreAsync();
-            }
-            catch (Exception ex)
-            {
-                //Log
-                return null;
-            }
-        }
-
-        protected abstract Task<Core.Entities.Restaurant>  GetInfoCoreAsync();
     }
 }

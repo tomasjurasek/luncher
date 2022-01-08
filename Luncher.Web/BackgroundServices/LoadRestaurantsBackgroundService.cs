@@ -23,16 +23,13 @@ namespace Luncher.Web.BackgroundServices
                 foreach (var restaurant in _restaurants)
                 {
                     var info = await restaurant.GetInfoAsync();
-                    if (info is not null)
-                    {
-                        await _cache.SetStringAsync(info.Type.ToString(),
+
+                    await _cache.SetStringAsync(info.Type.ToString(),
                       JsonSerializer.Serialize(info.MapToResponse()),
                       new DistributedCacheEntryOptions
                       {
                           AbsoluteExpiration = DateTime.UtcNow.AddHours(4)
                       });
-                    }
-
                 }
 
                 await Task.Delay(TimeSpan.FromHours(4));
