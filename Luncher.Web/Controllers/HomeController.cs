@@ -10,11 +10,12 @@ namespace Luncher.Web.Controllers
         private readonly IDistributedCache _cache;
 
         public HomeController(IDistributedCache cache)
-        { 
+        {
             _cache = cache;
         }
 
-        public async Task<IActionResult> Index()
+        [ResponseCache(Duration = 60)]
+        public IActionResult Index()
         {
             var restaurants = Enum.GetValues(typeof(Core.Entities.Type)).Cast<Core.Entities.Type>()
                 .Select(s => _cache.GetString(s.ToString()))
