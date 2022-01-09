@@ -1,16 +1,15 @@
 ﻿using Luncher.Core.Contracts;
+using Luncher.Core.Entities;
 
 namespace Luncher.Adapters.Restaurant
 {
     internal abstract class RestaurantBase : IRestaurant
     {
-        protected Core.Entities.Type Type { get; }
-        protected string Url { get; }
+        protected RestaurantType Type { get; }
 
-        public RestaurantBase(Core.Entities.Type type, string url) // TODO Address
+        public RestaurantBase(RestaurantType type) // TODO Address
         {
             Type = type;
-            Url = url;
         }
 
         public async Task<Core.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)

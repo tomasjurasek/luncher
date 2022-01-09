@@ -1,43 +1,22 @@
-﻿using HtmlAgilityPack;
-using Luncher.Core.Contracts;
+﻿using Luncher.Adapters.Restaurant.Providers;
 using Luncher.Core.Entities;
-using System.Text;
 
 namespace Luncher.Adapters.Restaurant
 {
     internal class TustoRestaurant : RestaurantBase
     {
-        private readonly HtmlWeb _htmlWeb;
+        private readonly IMenickaProvider _menuProvider;
 
-        public TustoRestaurant() : base(Core.Entities.Type.Tusto, "https://www.menicka.cz/2787-tusto-titanium.html")
+        public TustoRestaurant(IMenickaProvider menuProvider) : base(RestaurantType.Tusto)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            _htmlWeb = new HtmlWeb();
+            _menuProvider = menuProvider;
         }
 
         protected override async Task<Core.Entities.Restaurant> GetInfoCoreAsync(CancellationToken cancellationToken)
         {
-            var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url, cancellationToken);
+            var menu = await _menuProvider.GetMenuAsync(Type, cancellationToken);
 
-            var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "menicka")
-                .First();
-
-            var soaps = todayMenuNode.Descendants("li")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "polevka")
-                .Select(s => s.Element("div")?.InnerText)
-                .Where(s => s != null)
-                .Select(s => Soap.Create(s))
-                .ToList();
-
-            var meals = todayMenuNode.Descendants("li")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "jidlo")
-                .Select(s => s.Element("div")?.InnerText)
-                .Where(s => s != null)
-                .Select(s => Meal.Create(s))
-                .ToList();
-
-            return Core.Entities.Restaurant.Create(Type, Menu.Create(meals, soaps));
+            return Core.Entities.Restaurant.Create(Type, menu);
         }
     }
 }

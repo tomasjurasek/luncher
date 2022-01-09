@@ -1,6 +1,6 @@
 ﻿namespace Luncher.Core.Entities
 {
-    public enum Type
+    public enum RestaurantType
     {
         Padowetz = 0,
         Tusto = 1,

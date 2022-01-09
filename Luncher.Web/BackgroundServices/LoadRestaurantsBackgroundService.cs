@@ -34,7 +34,7 @@ namespace Luncher.Web.BackgroundServices
                           }, stoppingToken);
                     }
 
-                    await Task.Delay(TimeSpan.FromHours(4), stoppingToken);
+                    await Task.Delay(TimeSpan.FromHours(4), stoppingToken); // TODO Load only once in a day
                 }
                 catch (TaskCanceledException)
                 {

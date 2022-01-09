@@ -17,7 +17,7 @@ namespace Luncher.Web.Controllers
         [ResponseCache(Duration = 60)]
         public IActionResult Index()
         {
-            var restaurants = Enum.GetValues(typeof(Core.Entities.Type)).Cast<Core.Entities.Type>()
+            var restaurants = Enum.GetValues(typeof(Core.Entities.RestaurantType)).Cast<Core.Entities.RestaurantType>()
                 .Select(s => _cache.GetString(s.ToString()))
                 .Select(s => JsonSerializer.Deserialize<RestaurantResponse>(s));
 
