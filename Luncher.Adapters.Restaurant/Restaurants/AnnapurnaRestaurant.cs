@@ -26,13 +26,13 @@ namespace Luncher.Adapters.Restaurant.Restaurants
                 .NextSibling;
 
             //TODO Soaps
-
+            
             var meals = todayMenuNode
                 .Descendants("b")
                 .Select(s => Meal.Create(s.InnerText))
                 .ToList();
 
-            return Core.Entities.Restaurant.Create(Type, Menu.Create(meals, Array.Empty<Soap>())); // TODO Soap Empty
+            return Core.Entities.Restaurant.Create(Type, Menu.Create(meals));
         }
     }
 }
