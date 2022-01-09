@@ -19,7 +19,7 @@ namespace Luncher.Adapters.Restaurant
             {
                 return await GetInfoCoreAsync(cancellationToken);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //TODO Log
                 return Core.Entities.Restaurant.Create(Type, Core.Entities.Menu.Empty);
