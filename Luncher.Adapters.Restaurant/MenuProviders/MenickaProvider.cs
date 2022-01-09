@@ -9,6 +9,7 @@ namespace Luncher.Adapters.Restaurant.MenuProviders
     {
         private readonly HtmlWeb _htmlWeb;
         private string Url(string restaurantId) => $"https://www.menicka.cz/{restaurantId}.html";
+
         public MenickaProvider()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
