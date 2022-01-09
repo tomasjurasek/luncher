@@ -14,6 +14,7 @@ namespace Luncher.Adapters.Restaurant.MenuProviders
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             _htmlWeb = new HtmlWeb();
         }
+
         protected override async Task<Menu> GetMenuCoreAsync(RestaurantType restaurantType, CancellationToken cancellationToken)
         {
             var externalId = GetExternalRestaurantId(restaurantType);

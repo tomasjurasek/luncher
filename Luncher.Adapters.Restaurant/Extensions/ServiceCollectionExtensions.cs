@@ -14,6 +14,8 @@ namespace Luncher.Adapters.Restaurant.Extensions
             services.AddSingleton<IRestaurant, TustoRestaurant>();
 
             services.AddSingleton<IMenickaProvider, MenickaProvider>();
+            services.AddSingleton<IAnnapurnaMenuProvider, AnnapurnaMenuProvider>();
+            
 
             return services;
         }

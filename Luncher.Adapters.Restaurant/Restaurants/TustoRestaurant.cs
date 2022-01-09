@@ -1,18 +1,21 @@
 ﻿using Luncher.Adapters.Restaurant.MenuProviders;
+using Luncher.Core.Contracts;
 using Luncher.Core.Entities;
 
 namespace Luncher.Adapters.Restaurant
 {
-    internal class TustoRestaurant : RestaurantBase
+    internal class TustoRestaurant : IRestaurant
     {
-        private readonly IMenickaProvider _menuProvider;
+        public RestaurantType Type => RestaurantType.Tusto;
 
-        public TustoRestaurant(IMenickaProvider menuProvider) : base(RestaurantType.Tusto)
+        private readonly IMenickaProvider _menuProvider;
+        
+        public TustoRestaurant(IMenickaProvider menuProvider)
         {
             _menuProvider = menuProvider;
         }
 
-        protected override async Task<Core.Entities.Restaurant> GetInfoCoreAsync(CancellationToken cancellationToken)
+        public async Task<Core.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)
         {
             var menu = await _menuProvider.GetMenuAsync(Type, cancellationToken);
 

@@ -1,42 +1,25 @@
-﻿using HtmlAgilityPack;
+﻿using Luncher.Adapters.Restaurant.MenuProviders;
+using Luncher.Core.Contracts;
 using Luncher.Core.Entities;
 
 namespace Luncher.Adapters.Restaurant.Restaurants
 {
-    internal class AnnapurnaRestaurant : RestaurantBase
+    internal class AnnapurnaRestaurant : IRestaurant
     {
-        private readonly HtmlWeb _htmlWeb;
-        private string Url => "http://www.indicka-restaurace-annapurna.cz/";
+        public RestaurantType Type => RestaurantType.Annapurna;
 
-        public AnnapurnaRestaurant() : base(RestaurantType.Annapurna)
+        private readonly IAnnapurnaMenuProvider _menuProvider;
+
+        public AnnapurnaRestaurant(IAnnapurnaMenuProvider menuProvider)
         {
-            _htmlWeb = new HtmlWeb();
+            _menuProvider = menuProvider;
         }
 
-        protected override async Task<Core.Entities.Restaurant> GetInfoCoreAsync(CancellationToken cancellationToken)
+        public async Task<Core.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)
         {
-            var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url, cancellationToken);
+            var menu = await _menuProvider.GetMenuAsync(Type, cancellationToken);
 
-            var todayMenuNode = htmlDocument.DocumentNode.Descendants("p")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "TJden")
-                .First(s => s.InnerText.Contains(GetToday(), StringComparison.InvariantCultureIgnoreCase))
-                .NextSibling;
-
-            //TODO Soaps
-
-            var meals = todayMenuNode
-                .Descendants("b")
-                .Select(s => Meal.Create(s.InnerText))
-                .ToList();
-
-            return Core.Entities.Restaurant.Create(Type, Menu.Create(meals));
-        }
-
-        private string GetToday()
-        {
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
-            var culture = new System.Globalization.CultureInfo("cs-CZ");
-            return culture.DateTimeFormat.GetDayName(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).DayOfWeek);
+            return Core.Entities.Restaurant.Create(Type, menu);
         }
     }
 }
