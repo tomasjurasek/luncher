@@ -3,7 +3,7 @@ using Luncher.Core.Contracts;
 using Luncher.Core.Entities;
 using System.Text;
 
-namespace Luncher.Adapters.Restaurant.Providers
+namespace Luncher.Adapters.Restaurant.MenuProviders
 {
     internal class MenickaProvider : MenuProviderBase, IMenickaProvider
     {

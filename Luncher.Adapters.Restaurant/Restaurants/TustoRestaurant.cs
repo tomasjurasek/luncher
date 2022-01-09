@@ -1,4 +1,4 @@
-﻿using Luncher.Adapters.Restaurant.Providers;
+﻿using Luncher.Adapters.Restaurant.MenuProviders;
 using Luncher.Core.Entities;
 
 namespace Luncher.Adapters.Restaurant

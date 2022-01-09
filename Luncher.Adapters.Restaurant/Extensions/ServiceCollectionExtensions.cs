@@ -1,4 +1,4 @@
-﻿using Luncher.Adapters.Restaurant.Providers;
+﻿using Luncher.Adapters.Restaurant.MenuProviders;
 using Luncher.Adapters.Restaurant.Restaurants;
 using Luncher.Core.Contracts;
 using Microsoft.Extensions.DependencyInjection;

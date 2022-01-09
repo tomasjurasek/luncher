@@ -1,7 +1,7 @@
 ﻿using Luncher.Core.Contracts;
 using Luncher.Core.Entities;
 
-namespace Luncher.Adapters.Restaurant.Providers
+namespace Luncher.Adapters.Restaurant.MenuProviders
 {
     internal abstract class MenuProviderBase : IMenuProvider
     {
