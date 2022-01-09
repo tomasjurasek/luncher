@@ -8,7 +8,7 @@ namespace Luncher.Adapters.Restaurant.MenuProviders
     internal class MenickaProvider : MenuProviderBase, IMenickaProvider
     {
         private readonly HtmlWeb _htmlWeb;
-        private string Url(string restaurantId) => $"https://www.menicka.cz/{restaurantId}.html";
+        private string GetUrl(string restaurantId) => $"https://www.menicka.cz/{restaurantId}.html";
 
         public MenickaProvider()
         {
@@ -19,7 +19,7 @@ namespace Luncher.Adapters.Restaurant.MenuProviders
         protected override async Task<Menu> GetMenuCoreAsync(RestaurantType restaurantType, CancellationToken cancellationToken)
         {
             var externalId = GetExternalRestaurantId(restaurantType);
-            var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url(externalId), cancellationToken);
+            var htmlDocument = await _htmlWeb.LoadFromWebAsync(GetUrl(externalId), cancellationToken);
 
             var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "menicka")
