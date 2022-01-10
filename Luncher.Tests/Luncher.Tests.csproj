@@ -20,8 +20,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Luncher.Adapters.Restaurant\Luncher.Adapters.Restaurant.csproj" />
-  </ItemGroup>
-
 </Project>
