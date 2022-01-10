@@ -4,9 +4,9 @@ namespace Luncher.Web.BackgroundServices
 {
     public class LoadRestaurantsBackgroundService : BackgroundService
     {
-        private readonly IRestaurantService _restaurantService;
+        private readonly IRestaurantFacade _restaurantService;
 
-        public LoadRestaurantsBackgroundService(IRestaurantService restaurantService)
+        public LoadRestaurantsBackgroundService(IRestaurantFacade restaurantService)
         {
             _restaurantService = restaurantService;
         }

@@ -5,17 +5,17 @@ namespace Luncher.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IRestaurantService _restaurantService;
+        private readonly IRestaurantFacade _restaurantFacade;
 
-        public HomeController(IRestaurantService restaurantService)
+        public HomeController(IRestaurantFacade restaurantFacade)
         {
-            _restaurantService = restaurantService;
+            _restaurantFacade = restaurantFacade;
         }
 
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Index()
         {
-            var restaurants = await _restaurantService.GetAsync();
+            var restaurants = await _restaurantFacade.GetAsync();
 
             return View(restaurants);
         }

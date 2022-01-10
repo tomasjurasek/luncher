@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Luncher.Web.Services
 {
-    public class RestaurantService : IRestaurantService
+    public class RestaurantFacade : IRestaurantFacade
     {
         private readonly IDistributedCache _cache;
         private readonly IEnumerable<IRestaurant> _restaurants;
@@ -15,7 +15,7 @@ namespace Luncher.Web.Services
         private string GetRestaurantKey(RestaurantType restaurantType) => $"restaurant:{restaurantType}";
         private string GetRestaurantVoteKey(RestaurantType restaurantType) => $"votes:{restaurantType}";
 
-        public RestaurantService(IDistributedCache cache, IEnumerable<IRestaurant> restaurants)
+        public RestaurantFacade(IDistributedCache cache, IEnumerable<IRestaurant> restaurants)
         {
             _cache = cache;
             _restaurants = restaurants;
@@ -78,7 +78,7 @@ namespace Luncher.Web.Services
         }
     }
 
-    public interface IRestaurantService
+    public interface IRestaurantFacade
     {
         Task<ICollection<RestaurantResponse>> GetAsync(CancellationToken cancellationToken = default);
         Task ReloadAllAsync(CancellationToken cancellationToken = default);

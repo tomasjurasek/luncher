@@ -13,19 +13,19 @@ namespace Luncher.Web.Controllers
     public class VoteController : ControllerBase
     {
         private readonly IHubContext<VoteHub> _voteHub;
-        private readonly IRestaurantService _restaurantService;
+        private readonly IRestaurantFacade _restaurantFacade;
 
-        public VoteController(IHubContext<VoteHub> voteHub, IRestaurantService restaurantService)
+        public VoteController(IHubContext<VoteHub> voteHub, IRestaurantFacade restaurantFacade)
         {
             _voteHub = voteHub;
-            _restaurantService = restaurantService;
+            _restaurantFacade = restaurantFacade;
         }
 
         [HttpPost("")]
         public async Task<IActionResult> Vote([FromBody] VoteRequest request)
         {
             var restaurantType = (RestaurantType)Enum.Parse(typeof(RestaurantType), request.RestaurantId);
-            await _restaurantService.SetVoteAsync(restaurantType);
+            await _restaurantFacade.SetVoteAsync(restaurantType);
             await _voteHub.Clients.All.SendAsync("ReceiveVote", request.RestaurantId);
 
             return Ok();

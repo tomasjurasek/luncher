@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRestaurants();
 
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSingleton<IRestaurantService, RestaurantService>();
+builder.Services.AddSingleton<IRestaurantFacade, RestaurantFacade>();
 builder.Services.AddHostedService<LoadRestaurantsBackgroundService>();
 
 builder.Services.AddSignalR();
