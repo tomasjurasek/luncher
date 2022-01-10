@@ -43,7 +43,8 @@ namespace Luncher.Web.Controllers
         [HttpGet("{restaurantId}")]
         public IActionResult GetVotes(string restaurantId)
         {
-            return Ok();
+            var votesCount = _cache.GetString("votes:" + restaurantId);
+            return Ok(votesCount);
         }
 
         public class VoteRequest

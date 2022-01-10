@@ -3,7 +3,15 @@
 connection.on("ReceiveVote", function (restaurantId) {
     const selector = `.${restaurantId} .votes`;
     var votes = document.querySelector(selector);
-    votes.textContent += "+ ";
+    var votesNumber = parseInt(votes.textContent);
+    if (isNaN(votesNumber)) {
+        votesNumber = 1;
+    }
+    else {
+        votesNumber = votesNumber + 1;
+    }
+
+    votes.textContent = votesNumber;
 });
 
 connection.start().then(function () {
