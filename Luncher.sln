@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Domain", "Luncher.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Adapters.ThirdParty", "Luncher.Adapters.ThirdParty\Luncher.Adapters.ThirdParty.csproj", "{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luncher.Adapters.Storage", "Luncher.Adapters.Storage\Luncher.Adapters.Storage.csproj", "{12717310-F6C3-4922-B31D-2F4B290463EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12717310-F6C3-4922-B31D-2F4B290463EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12717310-F6C3-4922-B31D-2F4B290463EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12717310-F6C3-4922-B31D-2F4B290463EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12717310-F6C3-4922-B31D-2F4B290463EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
