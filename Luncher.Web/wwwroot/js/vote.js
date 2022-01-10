@@ -16,7 +16,9 @@ connection.on("ReceiveVote", function (restaurantId) {
 
 connection.start().then(function () {
     console.log("connected");
-}).catch(function () { });
+}).catch(function (err) {
+    console.log(err)
+});
 
 document.querySelectorAll('.vote-btn').forEach(voteBtn => {
     voteBtn.addEventListener('click', (event) => {
