@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Luncher.Core.Entities
+namespace Luncher.Domain.Entities
 {
     public class Menu
     {

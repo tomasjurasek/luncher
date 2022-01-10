@@ -1,4 +1,4 @@
-﻿namespace Luncher.Core.Entities
+﻿namespace Luncher.Domain.Entities
 {
     public class Soap
     {

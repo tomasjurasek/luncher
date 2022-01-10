@@ -7,12 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Luncher.Adapters.Restaurant\Luncher.Adapters.Restaurant.csproj" />
-    <ProjectReference Include="..\Luncher.Core\Luncher.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\Luncher.Adapters.ThirdParty\Luncher.Adapters.ThirdParty.csproj" />
+    <ProjectReference Include="..\Luncher.Domain\Luncher.Domain.csproj" />
   </ItemGroup>
 
 </Project>

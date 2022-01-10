@@ -17,7 +17,7 @@
             <h2 style="display: inline-block">@restaurant.Name</h2>
             <span>|   </span>
             <button class="vote-btn" style="display: inline-block;">Hlasuj</button>
-            <span class="votes" style="display: inline-block;font-weight: bold;"></span>
+            <span class="votes" style="display: inline-block;font-weight: bold;">@restaurant.Votes</span>
             <br />
 
             @if (!restaurant.Soaps.Any() && !restaurant.Meals.Any())

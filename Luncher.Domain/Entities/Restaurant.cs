@@ -1,4 +1,6 @@
-﻿namespace Luncher.Core.Entities
+﻿using Luncher.Core.Entities;
+
+namespace Luncher.Domain.Entities
 {
     public class Restaurant
     {

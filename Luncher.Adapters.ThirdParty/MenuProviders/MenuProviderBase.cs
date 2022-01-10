@@ -1,7 +1,8 @@
-﻿using Luncher.Core.Contracts;
-using Luncher.Core.Entities;
+﻿using Luncher.Core.Entities;
+using Luncher.Domain.Contracts;
+using Luncher.Domain.Entities;
 
-namespace Luncher.Adapters.Restaurant.MenuProviders
+namespace Luncher.Adapters.ThirdParty.MenuProviders
 {
     internal abstract class MenuProviderBase : IMenuProvider
     {

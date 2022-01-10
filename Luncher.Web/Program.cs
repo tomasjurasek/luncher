@@ -1,6 +1,7 @@
-using Luncher.Adapters.Restaurant.Extensions;
+using Luncher.Adapters.ThirdParty.Extensions;
 using Luncher.Web.BackgroundServices;
 using Luncher.Web.Hubs;
+using Luncher.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRestaurants();
 
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSingleton<IRestaurantService, RestaurantService>();
 builder.Services.AddHostedService<LoadRestaurantsBackgroundService>();
 
 builder.Services.AddSignalR();

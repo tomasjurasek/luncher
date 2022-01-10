@@ -1,10 +1,11 @@
 ﻿using HtmlAgilityPack;
-using Luncher.Core.Contracts;
 using Luncher.Core.Entities;
+using Luncher.Domain.Contracts;
+using Luncher.Domain.Entities;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Luncher.Adapters.Restaurant.MenuProviders
+namespace Luncher.Adapters.ThirdParty.MenuProviders
 {
     internal class MenickaProvider : MenuProviderBase, IMenickaProvider
     {

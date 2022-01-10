@@ -1,8 +1,8 @@
-﻿using Luncher.Adapters.Restaurant.MenuProviders;
-using Luncher.Core.Contracts;
+﻿using Luncher.Adapters.ThirdParty.MenuProviders;
 using Luncher.Core.Entities;
+using Luncher.Domain.Contracts;
 
-namespace Luncher.Adapters.Restaurant
+namespace Luncher.Adapters.ThirdParty
 {
     internal class PadowetzRestaurant : IRestaurant
     {
@@ -15,11 +15,11 @@ namespace Luncher.Adapters.Restaurant
             _menuProvider = menuProvider;
         }
 
-        public async Task<Core.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)
+        public async Task<Domain.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)
         {
             var menu = await _menuProvider.GetMenuAsync(Type, cancellationToken);
 
-            return Core.Entities.Restaurant.Create(Type, menu);
+            return Domain.Entities.Restaurant.Create(Type, menu);
         }
     }
 }

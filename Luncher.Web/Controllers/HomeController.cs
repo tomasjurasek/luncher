@@ -1,4 +1,6 @@
-﻿using Luncher.Web.Models;
+﻿using Luncher.Core.Entities;
+using Luncher.Web.Models;
+using Luncher.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
@@ -7,19 +9,17 @@ namespace Luncher.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IDistributedCache _cache;
+        private readonly IRestaurantService _restaurantService;
 
-        public HomeController(IDistributedCache cache)
+        public HomeController(IRestaurantService restaurantService)
         {
-            _cache = cache;
+            _restaurantService = restaurantService;
         }
 
         [ResponseCache(Duration = 60)]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var restaurants = Enum.GetValues(typeof(Core.Entities.RestaurantType)).Cast<Core.Entities.RestaurantType>()
-                .Select(s => _cache.GetString(s.ToString()))
-                .Select(s => JsonSerializer.Deserialize<RestaurantResponse>(s));
+            var restaurants = await _restaurantService.GetAsync();
 
             return View(restaurants);
         }

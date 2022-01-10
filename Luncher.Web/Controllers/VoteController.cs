@@ -1,8 +1,11 @@
-﻿using Luncher.Web.Hubs;
+﻿using Luncher.Core.Entities;
+using Luncher.Web.Hubs;
+using Luncher.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Distributed;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Luncher.Web.Controllers
@@ -12,43 +15,27 @@ namespace Luncher.Web.Controllers
     public class VoteController : ControllerBase
     {
         private readonly IHubContext<VoteHub> _voteHub;
-        private readonly IDistributedCache _cache;
+        private readonly IRestaurantService _restaurantService;
 
-        public VoteController(IHubContext<VoteHub> voteHub, IDistributedCache cache)
+        public VoteController(IHubContext<VoteHub> voteHub, IRestaurantService restaurantService)
         {
             _voteHub = voteHub;
-            _cache = cache;
+            _restaurantService = restaurantService;
         }
 
         [HttpPost("")]
-        public IActionResult Vote([FromBody] VoteRequest request)
+        public async Task<IActionResult> Vote([FromBody] VoteRequest request)
         {
-            //TODO userId + storage
-            var votesCount = _cache.GetString("votes:" + request.RestaurantId);
-            if (votesCount is null)
-            {
-                _cache.SetString("votes:" + request.RestaurantId, 1.ToString());
-            }
-            else
-            {
-                var votes = int.Parse(votesCount) + 1;
-                _cache.SetString("votes:" + request.RestaurantId, votes.ToString());
-            }
-
-            _voteHub.Clients.All.SendAsync("ReceiveVote", request.RestaurantId);
+            var restaurantType = (RestaurantType)Enum.Parse(typeof(RestaurantType), request.RestaurantId);
+            await _restaurantService.SetVoteAsync(restaurantType);
+            await _voteHub.Clients.All.SendAsync("ReceiveVote", request.RestaurantId);
 
             return Ok();
         }
 
-        [HttpGet("{restaurantId}")]
-        public IActionResult GetVotes(string restaurantId)
-        {
-            var votesCount = _cache.GetString("votes:" + restaurantId);
-            return Ok(votesCount);
-        }
-
         public class VoteRequest
         {
+            [Required]
             [JsonPropertyName("restaurantId")]
             public string RestaurantId { get; set; }
 

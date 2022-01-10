@@ -5,11 +5,11 @@ VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Web", "Luncher.Web\Luncher.Web.csproj", "{BF6E3B59-3FDE-42C0-818C-6917F343DE82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Core", "Luncher.Core\Luncher.Core.csproj", "{8736EEFB-DC79-46CB-B262-5CBA90021A6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Tests", "Luncher.Tests\Luncher.Tests.csproj", "{3CF49F77-8566-40A1-955F-F8741078664E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Adapters.Restaurant", "Luncher.Adapters.Restaurant\Luncher.Adapters.Restaurant.csproj", "{6D75EDFC-84C8-435D-9871-C71773090B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Domain", "Luncher.Domain\Luncher.Domain.csproj", "{6C19823E-4DC6-4098-91F5-BD8DC6208F6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luncher.Tests", "Luncher.Tests\Luncher.Tests.csproj", "{3CF49F77-8566-40A1-955F-F8741078664E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luncher.Adapters.ThirdParty", "Luncher.Adapters.ThirdParty\Luncher.Adapters.ThirdParty.csproj", "{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,18 @@ Global
 		{BF6E3B59-3FDE-42C0-818C-6917F343DE82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF6E3B59-3FDE-42C0-818C-6917F343DE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF6E3B59-3FDE-42C0-818C-6917F343DE82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8736EEFB-DC79-46CB-B262-5CBA90021A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8736EEFB-DC79-46CB-B262-5CBA90021A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8736EEFB-DC79-46CB-B262-5CBA90021A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8736EEFB-DC79-46CB-B262-5CBA90021A6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D75EDFC-84C8-435D-9871-C71773090B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D75EDFC-84C8-435D-9871-C71773090B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D75EDFC-84C8-435D-9871-C71773090B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D75EDFC-84C8-435D-9871-C71773090B96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CF49F77-8566-40A1-955F-F8741078664E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CF49F77-8566-40A1-955F-F8741078664E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CF49F77-8566-40A1-955F-F8741078664E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CF49F77-8566-40A1-955F-F8741078664E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C19823E-4DC6-4098-91F5-BD8DC6208F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C19823E-4DC6-4098-91F5-BD8DC6208F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C19823E-4DC6-4098-91F5-BD8DC6208F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C19823E-4DC6-4098-91F5-BD8DC6208F6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82EDCBA3-5D0C-41C7-B3F9-E1B5F6FC80B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

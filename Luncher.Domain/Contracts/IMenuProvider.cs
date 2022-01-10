@@ -1,6 +1,7 @@
 ﻿using Luncher.Core.Entities;
+using Luncher.Domain.Entities;
 
-namespace Luncher.Core.Contracts
+namespace Luncher.Domain.Contracts
 {
     public interface IMenuProvider
     {

@@ -1,4 +1,4 @@
-﻿using Luncher.Core.Entities;
+﻿using Luncher.Domain.Entities;
 using Luncher.Web.Models;
 
 namespace Luncher.Web.Mappers
@@ -10,7 +10,8 @@ namespace Luncher.Web.Mappers
             return new RestaurantResponse(
                 restaurant.Type.ToString(), 
                 restaurant.Menu.Soaps.Select(s => new Food(s.Name)).ToArray(), 
-                restaurant.Menu.Meals.Select(s => new Food(s.Name)).ToArray());
+                restaurant.Menu.Meals.Select(s => new Food(s.Name)).ToArray(),
+                0);
 
         }
     }

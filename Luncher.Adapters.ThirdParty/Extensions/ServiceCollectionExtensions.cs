@@ -1,9 +1,9 @@
-﻿using Luncher.Adapters.Restaurant.MenuProviders;
-using Luncher.Adapters.Restaurant.Restaurants;
-using Luncher.Core.Contracts;
+﻿using Luncher.Adapters.ThirdParty.MenuProviders;
+using Luncher.Adapters.ThirdParty.Restaurants;
+using Luncher.Domain.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Luncher.Adapters.Restaurant.Extensions
+namespace Luncher.Adapters.ThirdParty.Extensions
 {
     public static class ServiceCollectionExtensions
     {
