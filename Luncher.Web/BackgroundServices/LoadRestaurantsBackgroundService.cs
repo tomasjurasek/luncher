@@ -4,11 +4,11 @@ namespace Luncher.Web.BackgroundServices
 {
     public class LoadRestaurantsBackgroundService : BackgroundService
     {
-        private readonly IRestaurantFacade _restaurantService;
+        private readonly IRestaurantFacade _restaurantFacade;
 
-        public LoadRestaurantsBackgroundService(IRestaurantFacade restaurantService)
+        public LoadRestaurantsBackgroundService(IRestaurantFacade restaurantFacade)
         {
-            _restaurantService = restaurantService;
+            _restaurantFacade = restaurantFacade;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -17,7 +17,7 @@ namespace Luncher.Web.BackgroundServices
             {
                 try
                 {
-                    await _restaurantService.ReloadAllAsync(stoppingToken);
+                    await _restaurantFacade.ReloadAllAsync(stoppingToken);
                     await Task.Delay(TimeSpan.FromHours(2), stoppingToken);
                 }
                 catch (TaskCanceledException)
