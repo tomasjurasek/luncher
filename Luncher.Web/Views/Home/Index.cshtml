@@ -13,29 +13,38 @@
 <div>
     @foreach (var restaurant in Model)
     {
-        <h2>@restaurant.Name</h2>
-        <br />
-
-        @if (!restaurant.Soaps.Any() && !restaurant.Meals.Any())
-        {
-            <div>Žádné menu</div>
-        }
-        else
-        {
-            <h5>Polévky</h5>
-            @foreach (var soap in restaurant.Soaps)
-            {
-                <div>@soap.Name</div>
-            }
+        <div class="@restaurant.Name">
+            <h2 style="display: inline-block">@restaurant.Name</h2>
+            <span>|   </span>
+            <button class="vote-btn" style="display: inline-block;">Hlasuj</button>
+            <span class="votes" style="display: inline-block;font-weight: bold;"></span>
             <br />
 
-            <h5>Hlavní</h5>
-            @foreach (var meal in restaurant.Meals)
+            @if (!restaurant.Soaps.Any() && !restaurant.Meals.Any())
             {
-                <div>@meal.Name</div>
+                <div>Žádné menu</div>
             }
-        }
+            else
+            {
+                <h5>Polévky</h5>
+                <ul>
+                    @foreach (var soap in restaurant.Soaps)
+                    {
+                        <li>@soap.Name</li>
+                    }
+                </ul>
+                <br />
 
-        <hr />
+                <h5>Hlavní</h5>
+                <ul>
+                    @foreach (var meal in restaurant.Meals)
+                    {
+                        <li>@meal.Name</li>
+                    }
+                </ul>
+            }
+
+            <hr />
+        </div>
     }
 </div>

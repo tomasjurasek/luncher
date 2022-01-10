@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Luncher.Core.Contracts;
 using Luncher.Core.Entities;
+using System.Text.RegularExpressions;
 
 namespace Luncher.Adapters.Restaurant.MenuProviders
 {
@@ -8,6 +9,7 @@ namespace Luncher.Adapters.Restaurant.MenuProviders
     {
         private readonly HtmlWeb _htmlWeb;
         private string Url => $"http://www.indicka-restaurace-annapurna.cz/";
+
         public AnnapurnaMenuProvider()
         {
             _htmlWeb = new HtmlWeb();
@@ -26,7 +28,7 @@ namespace Luncher.Adapters.Restaurant.MenuProviders
 
             var meals = todayMenuNode
                 .Descendants("b")
-                .Select(s => Meal.Create(s.InnerText))
+                .Select(s => Meal.Create(Regex.Replace(s.InnerText, @"^[0-9]\.", "")))
                 .ToList();
 
             return Menu.Create(meals);
