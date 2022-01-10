@@ -18,7 +18,7 @@ namespace Luncher.Web.BackgroundServices
                 try
                 {
                     await _restaurantService.ReloadAllAsync(stoppingToken);
-                    await Task.Delay(TimeSpan.FromHours(4), stoppingToken); // TODO Load only once in a day
+                    await Task.Delay(TimeSpan.FromHours(2), stoppingToken);
                 }
                 catch (TaskCanceledException)
                 {

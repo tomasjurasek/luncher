@@ -39,15 +39,17 @@ namespace Luncher.Web.Services
         public async Task SetVoteAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default)
         {
             var cacheKey = GetRestaurantVoteKey(restaurantType);
-            var votes = await _cache.GetStringAsync(cacheKey, cancellationToken);
-            if (votes is null)
+            var cachedVotes = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            var votes = 1;
+            if (cachedVotes is not null)
             {
-                await _cache.SetStringAsync(cacheKey, $"{1}", cancellationToken);
+                votes = int.Parse(cachedVotes) + 1;
             }
-            else
+
+            await _cache.SetStringAsync(cacheKey, $"{votes}", new DistributedCacheEntryOptions
             {
-                await _cache.SetStringAsync(cacheKey, $"{int.Parse(votes) + 1}", cancellationToken);
-            }
+                AbsoluteExpiration = DateTime.UtcNow.AddHours(4)
+            }, cancellationToken);
         }
 
         public async Task ReloadAllAsync(CancellationToken cancellationToken = default)
@@ -60,7 +62,7 @@ namespace Luncher.Web.Services
                   JsonSerializer.Serialize(info.MapToResponse()),
                   new DistributedCacheEntryOptions
                   {
-                      AbsoluteExpiration = DateTime.UtcNow.AddHours(4)
+                      AbsoluteExpiration = DateTime.UtcNow.AddHours(2)
                   }, cancellationToken);
             }
         }
