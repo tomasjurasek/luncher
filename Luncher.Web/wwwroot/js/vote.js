@@ -18,9 +18,14 @@ connection.start().then(function () {
     console.log("connected");
 }).catch(function () { });
 
-const voteBtn = document.querySelector('.vote-btn');
-voteBtn.addEventListener('click', (event) => {
-    var restaurantId = event.target.parentNode.className
+document.querySelectorAll('.vote-btn').forEach(voteBtn => {
+    voteBtn.addEventListener('click', (event) => {
+        setVote(event);
+    });
+});
+
+function setVote(event) {
+    var restaurantId = event.target.parentNode.className;
     $.ajax({
         type: 'POST',
         url: '/api/vote',
@@ -29,8 +34,7 @@ voteBtn.addEventListener('click', (event) => {
         data: JSON.stringify(
             {
                 restaurantId: restaurantId,
-                userId: "XYZ" // TODO Generate unique Id
+                userId: "XYZ"
             })
     });
-
-});
+}
