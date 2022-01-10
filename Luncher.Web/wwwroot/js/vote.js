@@ -1,4 +1,7 @@
-﻿var connection = new signalR.HubConnectionBuilder().withUrl("/voteHub").build();
+﻿var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/voteHub")
+    .withAutomaticReconnect()
+    .build();
 
 connection.on("ReceiveVote", function (restaurantId) {
     const selector = `.${restaurantId} .votes`;
