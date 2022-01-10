@@ -40,6 +40,9 @@ function setVote(event) {
             {
                 restaurantId: restaurantId,
                 userId: "XYZ"
-            })
+            }),
+        complete: function () {
+            event.target.disabled = true;
+        }
     });
 }
