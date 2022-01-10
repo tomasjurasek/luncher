@@ -1,9 +1,5 @@
-﻿using Luncher.Core.Entities;
-using Luncher.Web.Models;
-using Luncher.Web.Services;
+﻿using Luncher.Web.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
-using System.Text.Json;
 
 namespace Luncher.Web.Controllers
 {

@@ -1,10 +1,8 @@
 ﻿using Luncher.Core.Entities;
 using Luncher.Web.Hubs;
 using Luncher.Web.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Caching.Distributed;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
