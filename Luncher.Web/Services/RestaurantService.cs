@@ -24,22 +24,19 @@ namespace Luncher.Web.Services
         public async Task<ICollection<RestaurantResponse>> GetAsync(CancellationToken cancellationToken = default)
         {
             var restaurants = Enum.GetValues(typeof(RestaurantType)).Cast<RestaurantType>()
-                .Select(s => _cache.GetString(GetRestaurantKey(s)))
-                .Select(s => JsonSerializer.Deserialize<RestaurantResponse>(s));
+                .Select(async s =>
+                {
+                    var restaurant = JsonSerializer.Deserialize<RestaurantResponse>(_cache.GetString(GetRestaurantKey(s)));
+                    var restaurantType = (RestaurantType)Enum.Parse(typeof(RestaurantType), restaurant!.Name);
+                    var votes = await GetVotesAsync(restaurantType);
+                    return restaurant! with { Votes = votes };
+                })
+                .Select(s => s.Result);
 
-            var response = new List<RestaurantResponse>(); // TODO ??
-            foreach (var restaurant in restaurants)
-            {
-                var restaurantType = (RestaurantType)Enum.Parse(typeof(RestaurantType), restaurant.Name); // TODO refactor
-                var votes = await GetVotesAsync(restaurantType);
-
-                response.Add(restaurant! with { Votes = votes });
-            }
-
-            return response;
+            return restaurants.ToList();
         }
 
-        public async Task SetVoteAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default) // TODO UserId
+        public async Task SetVoteAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default)
         {
             var cacheKey = GetRestaurantVoteKey(restaurantType);
             var votes = await _cache.GetStringAsync(cacheKey, cancellationToken);
@@ -53,7 +50,7 @@ namespace Luncher.Web.Services
             }
         }
 
-        public async Task StoreAsync(CancellationToken cancellationToken = default) // TODO better name
+        public async Task ReloadAllAsync(CancellationToken cancellationToken = default)
         {
             foreach (var restaurant in _restaurants)
             {
@@ -84,7 +81,7 @@ namespace Luncher.Web.Services
     public interface IRestaurantService
     {
         Task<ICollection<RestaurantResponse>> GetAsync(CancellationToken cancellationToken = default);
-        Task StoreAsync(CancellationToken cancellationToken = default);
+        Task ReloadAllAsync(CancellationToken cancellationToken = default);
         Task SetVoteAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default);
     }
 }
