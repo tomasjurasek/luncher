@@ -25,10 +25,20 @@ namespace Luncher.Web.Controllers
         public async Task<IActionResult> Vote([FromBody] VoteRequest request)
         {
             var restaurantType = (RestaurantType)Enum.Parse(typeof(RestaurantType), request.RestaurantId);
-            await _restaurantFacade.SetVoteAsync(restaurantType);
-            await _voteHub.Clients.All.SendAsync("ReceiveVote", request.RestaurantId);
+            var result = await _restaurantFacade.SetVoteAsync(request.UserId, restaurantType);
+            if(!result)
+            {
+                return BadRequest("The user already voted!");
+            }
 
+            await _voteHub.Clients.All.SendAsync("ReceiveVote", request.RestaurantId);
             return Ok();
+        }
+
+        [HttpGet("{userId}")]
+        public IActionResult GetVotes([FromRoute] string userId)
+        {
+            return Ok(_restaurantFacade.GetVotedRestaurants(userId));
         }
 
         public class VoteRequest
@@ -37,6 +47,7 @@ namespace Luncher.Web.Controllers
             [JsonPropertyName("restaurantId")]
             public string RestaurantId { get; set; }
 
+            [Required]
             [JsonPropertyName("userId")]
             public string UserId { get; set; }
         }

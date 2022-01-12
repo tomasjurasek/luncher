@@ -15,7 +15,7 @@ namespace Luncher.Web.Services
         private readonly TelemetryClient _telemetryClient;
 
         private string GetRestaurantKey(RestaurantType restaurantType) => $"restaurant:{restaurantType}";
-        private string GetRestaurantVoteKey(RestaurantType restaurantType) => $"votes:{restaurantType}";
+        private string GetRestaurantVotesKey(RestaurantType restaurantType) => $"votes:{restaurantType}";
 
         public RestaurantFacade(IDistributedCache cache, IEnumerable<IRestaurant> restaurants,
             TelemetryClient telemetryClient)
@@ -32,25 +32,56 @@ namespace Luncher.Web.Services
                 {
                     var restaurant = JsonSerializer.Deserialize<RestaurantResponse>(_cache.GetString(GetRestaurantKey(s)));
                     var restaurantType = (RestaurantType)Enum.Parse(typeof(RestaurantType), restaurant!.Name);
-                    var votes = await GetVotesAsync(restaurantType);
-                    return restaurant! with { Votes = votes };
+                    var restaurantVote = await GetVotesAsync(restaurantType);
+                    return restaurant! with { Votes = restaurantVote.UserIds.Count };
                 })
                 .Select(s => s.Result);
 
             return restaurants.ToList();
         }
 
-        public async Task SetVoteAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default)
+        public ICollection<string> GetVotedRestaurants(string userId)
         {
-            var cacheKey = GetRestaurantVoteKey(restaurantType);
-            var cachedVotes = await _cache.GetStringAsync(cacheKey, cancellationToken);
-            var votes = 1;
-            if (cachedVotes is not null)
+            var restaurantTypes = Enum.GetValues(typeof(RestaurantType)).Cast<RestaurantType>()
+                .Select(s =>
+                   {
+                       var restaurantVoteJson = _cache.GetString(GetRestaurantVotesKey(s));
+                       if (restaurantVoteJson is not null)
+                       {
+                           var restaurantVotes = JsonSerializer.Deserialize<RestaurantVoteResponse>(restaurantVoteJson);
+                           return restaurantVotes;
+                       }
+
+                       return new RestaurantVoteResponse(s, new List<string>());
+                   })
+               .Where(s => s!.UserIds.Contains(userId))
+               .Select(s => s!.RestaurantType.ToString());
+
+            return restaurantTypes.ToList();
+        }
+
+        public async Task<bool> SetVoteAsync(string userId, RestaurantType restaurantType, CancellationToken cancellationToken = default)
+        {
+            var cacheKey = GetRestaurantVotesKey(restaurantType);
+            var restaurantVoteJson = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            RestaurantVoteResponse restaurantVote;
+            if (restaurantVoteJson is not null)
             {
-                votes = int.Parse(cachedVotes) + 1;
+                restaurantVote = JsonSerializer.Deserialize<RestaurantVoteResponse>(restaurantVoteJson);
+
+                if (restaurantVote!.UserIds.Contains(userId))
+                {
+                    return false;
+                }
+
+                restaurantVote!.UserIds.Add(userId);
+            }
+            else
+            {
+                restaurantVote = new RestaurantVoteResponse(restaurantType, new List<string> { userId });
             }
 
-            await _cache.SetStringAsync(cacheKey, $"{votes}", new DistributedCacheEntryOptions
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(restaurantVote), new DistributedCacheEntryOptions
             {
                 AbsoluteExpiration = DateTime.UtcNow.AddHours(4)
             }, cancellationToken);
@@ -59,6 +90,8 @@ namespace Luncher.Web.Services
             {
                 { "Restaurant", restaurantType.ToString() }
             });
+
+            return true;
         }
 
         public async Task ReloadAllAsync(CancellationToken cancellationToken = default)
@@ -76,16 +109,16 @@ namespace Luncher.Web.Services
             }
         }
 
-        private async Task<int> GetVotesAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default)
+        private async Task<RestaurantVoteResponse> GetVotesAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default) // TODO refactor
         {
-            var cacheKey = GetRestaurantVoteKey(restaurantType);
-            var votes = await _cache.GetStringAsync(cacheKey, cancellationToken);
-            if (votes is null)
+            var cacheKey = GetRestaurantVotesKey(restaurantType);
+            var restaurantVoteJson = await _cache.GetStringAsync(cacheKey, cancellationToken);
+            if (restaurantVoteJson is null)
             {
-                return 0;
+                return new RestaurantVoteResponse(restaurantType, new List<string>());
             }
 
-            return int.Parse(votes);
+            return JsonSerializer.Deserialize<RestaurantVoteResponse>(restaurantVoteJson);
         }
     }
 
@@ -93,6 +126,7 @@ namespace Luncher.Web.Services
     {
         Task<ICollection<RestaurantResponse>> GetAsync(CancellationToken cancellationToken = default);
         Task ReloadAllAsync(CancellationToken cancellationToken = default);
-        Task SetVoteAsync(RestaurantType restaurantType, CancellationToken cancellationToken = default);
+        Task<bool> SetVoteAsync(string userId, RestaurantType restaurantType, CancellationToken cancellationToken = default);
+        ICollection<string> GetVotedRestaurants(string userId); // TODO
     }
 }

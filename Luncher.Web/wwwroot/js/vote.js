@@ -39,10 +39,42 @@ function setVote(event) {
         data: JSON.stringify(
             {
                 restaurantId: restaurantId,
-                userId: "XYZ"
+                userId: getUserId()
             }),
         complete: function () {
             event.target.disabled = true;
         }
     });
+}
+
+window.addEventListener("load", function () {
+    loadVotedRestaurants();
+});
+
+function loadVotedRestaurants() {
+    $.ajax({
+        type: 'GET',
+        url: `/api/vote/${getUserId()}`,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        complete: function (restaurants) {
+            restaurants.responseJSON.forEach(restaurant => {
+                const selector = `.${restaurant} .vote-btn`;
+                var voteBtn = document.querySelector(selector);
+                voteBtn.disabled = true;
+            });
+        }
+    });
+}
+
+function getUserId() {
+    var userId = localStorage.getItem("luncher:userId");
+    if (userId) {
+        return userId;
+    }
+
+    userId = Math.random().toString(36);
+    localStorage.setItem("luncher:userId", userId);
+
+    return userId;
 }
