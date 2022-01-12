@@ -13,6 +13,7 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IRestaurantFacade, RestaurantFacade>();
 builder.Services.AddHostedService<LoadRestaurantsBackgroundService>();
 
+builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddSignalR();
 
 var app = builder.Build();

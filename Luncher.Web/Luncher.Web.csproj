@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Luncher.Adapters.ThirdParty\Luncher.Adapters.ThirdParty.csproj" />
     <ProjectReference Include="..\Luncher.Domain\Luncher.Domain.csproj" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 using Luncher.Domain.Contracts;
 using Luncher.Web.Mappers;
 using Luncher.Web.Models;
+using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 
@@ -11,14 +12,17 @@ namespace Luncher.Web.Services
     {
         private readonly IDistributedCache _cache;
         private readonly IEnumerable<IRestaurant> _restaurants;
+        private readonly TelemetryClient _telemetryClient;
 
         private string GetRestaurantKey(RestaurantType restaurantType) => $"restaurant:{restaurantType}";
         private string GetRestaurantVoteKey(RestaurantType restaurantType) => $"votes:{restaurantType}";
 
-        public RestaurantFacade(IDistributedCache cache, IEnumerable<IRestaurant> restaurants)
+        public RestaurantFacade(IDistributedCache cache, IEnumerable<IRestaurant> restaurants,
+            TelemetryClient telemetryClient)
         {
             _cache = cache;
             _restaurants = restaurants;
+            _telemetryClient = telemetryClient;
         }
 
         public async Task<ICollection<RestaurantResponse>> GetAsync(CancellationToken cancellationToken = default)
@@ -50,6 +54,11 @@ namespace Luncher.Web.Services
             {
                 AbsoluteExpiration = DateTime.UtcNow.AddHours(4)
             }, cancellationToken);
+
+            _telemetryClient.TrackEvent("Vote", new Dictionary<string, string>
+            {
+                { "Restaurant", restaurantType.ToString() }
+            });
         }
 
         public async Task ReloadAllAsync(CancellationToken cancellationToken = default)
