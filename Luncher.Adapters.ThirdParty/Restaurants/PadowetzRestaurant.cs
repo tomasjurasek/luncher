@@ -1,18 +1,15 @@
 ﻿using HtmlAgilityPack;
-using Luncher.Adapters.ThirdParty.MenuProviders;
 using Luncher.Adapters.ThirdParty.Restaurants;
 using Luncher.Core.Entities;
-using Luncher.Domain.Contracts;
 using Luncher.Domain.Entities;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Luncher.Adapters.ThirdParty
 {
     internal class PadowetzRestaurant : RestaurantBase
     {
         private readonly HtmlWeb _htmlWeb;
-        private string Url => $"https://www.menicka.cz/2743-restaurant-padowetz.html";
+        private string Url => $"http://www.restaurant-padowetz.cz/poledni-menu.htm";
 
         public PadowetzRestaurant() : base(RestaurantType.Padowetz)
         {
@@ -25,20 +22,24 @@ namespace Luncher.Adapters.ThirdParty
             var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url, cancellationToken);
 
             var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "menicka")
+                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "tydeniMenu ")
                 .First();
 
 
-            var soaps = todayMenuNode.Descendants("li")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "polevka")
-                .Select(s => s.ChildNodes[1].InnerText)
-                .Select(s => Soap.Create(Regex.Replace(s, @"^[0-9]\.", "")))
+            var soaps = todayMenuNode.Descendants("table")
+                .Where(s => s.Attributes.Contains("id") && s.Attributes["id"].Value == "t_Polevky")
+                .First()
+                .Descendants("tr")
+                .Select(s => $"{s.ChildNodes[0].InnerText} {s.ChildNodes[1].InnerText}")
+                .Select(s => Soap.Create(s))
                 .ToList();
 
-            var meals = todayMenuNode.Descendants("li")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "jidlo")
-                .Select(s => s.ChildNodes[1].InnerText)
-                .Select(s => Meal.Create(Regex.Replace(s, @"^[0-9]\.", "")))
+            var meals = todayMenuNode.Descendants("table")
+                .Where(s => s.Attributes.Contains("id") && s.Attributes["id"].Value == "t_Hlavni-chod")
+                .First()
+                .Descendants("tr")
+                .Select(s => $"{s.ChildNodes[0].InnerText} {s.ChildNodes[1].InnerText}")
+                .Select(s => Meal.Create(s))
                 .ToList();
 
             return Restaurant.Create(Type, Menu.Create(meals, soaps));
