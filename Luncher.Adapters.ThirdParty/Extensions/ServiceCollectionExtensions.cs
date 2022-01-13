@@ -8,9 +8,11 @@ namespace Luncher.Adapters.ThirdParty.Extensions
     {
         public static IServiceCollection AddRestaurants(this IServiceCollection services)
         {
+            //TODO use Scrutor
             services.AddSingleton<IRestaurant, AnnapurnaRestaurant>();
             services.AddSingleton<IRestaurant, PadowetzRestaurant>();
             services.AddSingleton<IRestaurant, TustoRestaurant>();
+            services.AddSingleton<IRestaurant, SaigonRestaurant>();
 
             return services;
         }

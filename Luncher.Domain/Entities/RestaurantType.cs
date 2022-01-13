@@ -3,7 +3,8 @@
     public enum RestaurantType
     {
         Padowetz = 0,
-        Tusto = 1,
-        Annapurna = 2
+        Annapurna = 1,
+        Tusto = 2,
+        Saigon = 3
     }
 }
