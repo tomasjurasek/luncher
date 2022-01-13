@@ -127,6 +127,6 @@ namespace Luncher.Web.Services
         Task<ICollection<RestaurantResponse>> GetAsync(CancellationToken cancellationToken = default);
         Task ReloadAllAsync(CancellationToken cancellationToken = default);
         Task<bool> SetVoteAsync(string userId, RestaurantType restaurantType, CancellationToken cancellationToken = default);
-        ICollection<string> GetVotedRestaurants(string userId); // TODO
+        ICollection<string> GetVotedRestaurants(string userId);
     }
 }
