@@ -1,25 +1,48 @@
-﻿using Luncher.Adapters.ThirdParty.MenuProviders;
+﻿using HtmlAgilityPack;
+using Luncher.Adapters.ThirdParty.Restaurants;
 using Luncher.Core.Entities;
-using Luncher.Domain.Contracts;
+using Luncher.Domain.Entities;
+using System.Text;
 
 namespace Luncher.Adapters.ThirdParty
 {
-    internal class PadowetzRestaurant : IRestaurant
+    internal class PadowetzRestaurant : RestaurantBase
     {
-        public RestaurantType Type => RestaurantType.Padowetz;
+        private readonly HtmlWeb _htmlWeb;
+        private string Url => $"http://www.restaurant-padowetz.cz/poledni-menu.htm";
 
-        private readonly IMenickaProvider _menuProvider;
-
-        public PadowetzRestaurant(IMenickaProvider menuProvider)
+        public PadowetzRestaurant() : base(RestaurantType.Padowetz)
         {
-            _menuProvider = menuProvider;
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            _htmlWeb = new HtmlWeb();
         }
 
-        public async Task<Domain.Entities.Restaurant> GetInfoAsync(CancellationToken cancellationToken)
+        protected override async Task<Restaurant> GetInfoCoreAsync(CancellationToken cancellationToken)
         {
-            var menu = await _menuProvider.GetMenuAsync(Type, cancellationToken);
+            var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url, cancellationToken);
 
-            return Domain.Entities.Restaurant.Create(Type, menu);
+            var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
+                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "tydeniMenu ")
+                .First();
+
+
+            var soaps = todayMenuNode.Descendants("table")
+                .Where(s => s.Attributes.Contains("id") && s.Attributes["id"].Value == "t_Polevky")
+                .First()
+                .Descendants("tr")
+                .Select(s => $"{s.ChildNodes[0].InnerText} {s.ChildNodes[1].InnerText}")
+                .Select(s => Soap.Create(s))
+                .ToList();
+
+            var meals = todayMenuNode.Descendants("table")
+                .Where(s => s.Attributes.Contains("id") && s.Attributes["id"].Value == "t_Hlavni-chod")
+                .First()
+                .Descendants("tr")
+                .Select(s => $"{s.ChildNodes[0].InnerText} {s.ChildNodes[1].InnerText}")
+                .Select(s => Meal.Create(s))
+                .ToList();
+
+            return Restaurant.Create(Type, Menu.Create(meals, soaps));
         }
     }
 }
