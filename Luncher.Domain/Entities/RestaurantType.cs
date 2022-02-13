@@ -5,6 +5,7 @@
         Padowetz = 0,
         Annapurna = 1,
         Tusto = 2,
-        Saigon = 3
+        Saigon = 3,
+        Charlies = 4
     }
 }
