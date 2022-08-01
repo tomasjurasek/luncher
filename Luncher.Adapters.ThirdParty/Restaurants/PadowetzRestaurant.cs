@@ -21,28 +21,6 @@ namespace Luncher.Adapters.ThirdParty
         protected override async Task<Restaurant> GetInfoCoreAsync(CancellationToken cancellationToken)
         {
             var htmlDocument = await _htmlWeb.LoadFromWebAsync(Url, cancellationToken);
-            /*
-            var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
-                .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "tydeniMenu ")
-                .First();
-
-
-            var soaps = todayMenuNode.Descendants("table")
-                .Where(s => s.Attributes.Contains("id") && s.Attributes["id"].Value == "t_Polevky")
-                .First()
-                .Descendants("tr")
-                .Select(s => $"{s.ChildNodes[0].InnerText} {s.ChildNodes[1].InnerText}")
-                .Select(s => Soap.Create(s))
-                .ToList();
-
-            var meals = todayMenuNode.Descendants("table")
-                .Where(s => s.Attributes.Contains("id") && s.Attributes["id"].Value == "t_Hlavni-chod")
-                .First()
-                .Descendants("tr")
-                .Select(s => $"{s.ChildNodes[0].InnerText} {s.ChildNodes[1].InnerText}")
-                .Select(s => Meal.Create(s))
-                .ToList();
-            */
 
             var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-md-7")
@@ -50,7 +28,6 @@ namespace Luncher.Adapters.ThirdParty
 
             var soaps = todayMenuNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-sm-8 col-md-9")
-                .ToList()
                 .Select(s => s.InnerText)
                 .Select(Soap.Create)
                 .Take(2)
@@ -58,7 +35,6 @@ namespace Luncher.Adapters.ThirdParty
 
             var meals = todayMenuNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-sm-8 col-md-9")
-                .ToList()
                 .Select(s => Regex.Replace(s.InnerText, @"\s+", " "))
                 .Select(Meal.Create)
                 .TakeLast(5)
