@@ -28,7 +28,6 @@ namespace Luncher.Adapters.ThirdParty
 
             var soaps = todayMenuNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-sm-8 col-md-9")
-                .ToList()
                 .Select(s => s.InnerText)
                 .Select(Soap.Create)
                 .Take(2)
@@ -36,7 +35,6 @@ namespace Luncher.Adapters.ThirdParty
 
             var meals = todayMenuNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-sm-8 col-md-9")
-                .ToList()
                 .Select(s => Regex.Replace(s.InnerText, @"\s+", " "))
                 .Select(Meal.Create)
                 .TakeLast(5)
