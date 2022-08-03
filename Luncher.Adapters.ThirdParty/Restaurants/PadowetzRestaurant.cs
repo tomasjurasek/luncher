@@ -24,7 +24,7 @@ namespace Luncher.Adapters.ThirdParty
 
             var todayMenuNode = htmlDocument.DocumentNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-md-7")
-                .ToList()[((int)DateTime.Today.DayOfWeek - 1) % 5];;
+                .First();
 
             var soaps = todayMenuNode.Descendants("div")
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-sm-8 col-md-9")
