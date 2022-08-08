@@ -18,7 +18,7 @@ namespace Luncher.Web.BackgroundServices
                 try
                 {
                     await _restaurantFacade.ReloadAllAsync(stoppingToken);
-                    await Task.Delay(TimeSpan.FromHours(2), stoppingToken);
+                    await Task.Delay(TimeSpan.FromMinutes(30), stoppingToken);
                 }
                 catch (TaskCanceledException)
                 {
