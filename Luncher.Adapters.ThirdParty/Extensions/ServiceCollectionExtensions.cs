@@ -12,10 +12,9 @@ namespace Luncher.Adapters.ThirdParty.Extensions
             services.AddSingleton<IRestaurant, AnnapurnaRestaurant>();
             services.AddSingleton<IRestaurant, PadowetzRestaurant>();
             services.AddSingleton<IRestaurant, TustoRestaurant>();
-            services.AddSingleton<IRestaurant, SaigonRestaurant>();
             services.AddSingleton<IRestaurant, CharliesRestaurant>();
             services.AddSingleton<IRestaurant, GardenRestaurant>();
-
+            
             return services;
         }
     }

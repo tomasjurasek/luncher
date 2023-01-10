@@ -2,11 +2,10 @@
 {
     public enum RestaurantType
     {
-        Padowetz = 0,
-        Annapurna = 1,
-        Tusto = 2,
-        Saigon = 3,
-        Charlies = 4,
-        Garden = 5
+        Garden = 0,
+        Padowetz = 1,
+        Charlies = 2,
+        Annapurna = 3,
+        Tusto = 4
     }
 }
