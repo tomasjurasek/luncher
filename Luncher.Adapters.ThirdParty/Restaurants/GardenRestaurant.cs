@@ -30,7 +30,7 @@ namespace Luncher.Adapters.ThirdParty
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-sm-8 col-md-9")
                 .Select(s => s.InnerText)
                 .Select(Soap.Create)
-                .Take(2)
+                .Take(1)
                 .ToList();
 
             var meals = todayMenuNode.Descendants("div")
