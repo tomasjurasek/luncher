@@ -6,6 +6,7 @@
         Annapurna = 1,
         Tusto = 2,
         Saigon = 3,
-        Charlies = 4
+        Charlies = 4,
+        Garden = 5
     }
 }
