@@ -7,7 +7,6 @@
         Charlies = 2,
         Annapurna = 3,
         Tusto = 4,
-        GrandKitchen = 5,
-        Saigon = 6
+        GrandKitchen = 5
     }
 }
