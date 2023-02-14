@@ -37,7 +37,7 @@ namespace Luncher.Adapters.ThirdParty
                 .Where(s => s.Attributes.Contains("class") && s.Attributes["class"].Value == "col-sm-8 col-md-9")
                 .Select(s => Regex.Replace(s.InnerText, @"\s+", " "))
                 .Select(Meal.Create)
-                .TakeLast(5)
+                .Take(new Range(1, 6))
                 .ToList();
 
             return Restaurant.Create(Type, Menu.Create(meals, soaps));
